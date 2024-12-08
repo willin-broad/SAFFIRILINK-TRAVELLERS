@@ -1,0 +1,12 @@
+{
+  "Body": {
+    "stkCallback": {
+      "MerchantRequestID": "c4dd-4669-a173-d5cee84d66e9742197",
+      "CheckoutRequestID": "ws_CO_25022024010258308704494196",
+      "ResultCode": 1032,
+      "ResultDesc": "Request cancelled by user"
+    }
+  }
+}
+
+{"Body":{"stkCallback":{"MerchantRequestID":"6e86-45dd-91ac-fd5d4178ab52648090","CheckoutRequestID":"ws_CO_01032024105857009704494196","ResultCode":0,"ResultDesc":"The service request is processed successfully.","CallbackMetadata":{"Item":[{"Name":"Amount","Value":1.00},{"Name":"MpesaReceiptNumber","Value":"SC10M4N9ES"},{"Name":"Balance"},{"Name":"TransactionDate","Value":20240301105637},{"Name":"PhoneNumber","Value":254704494196}]}}}}

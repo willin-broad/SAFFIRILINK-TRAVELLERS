@@ -1,0 +1,296 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <style>
+        table {
+            margin-top: 100px;
+            width: 500px;
+            background-color: #006b1b;
+            border: 1px solid blue;
+        }
+        td,th{
+            border: 1px solid blue;
+        }
+        .details {
+            margin-top: 50px;
+            height: 500px;
+            width: 300px;
+            background-color: dimgray;
+            text-align: center;
+            border-radius: 20px;
+            margin-left: 100px;
+            line-height: 10px;
+        }
+        .pay{
+            margin-left: 90%;
+            margin-top: 100px;
+
+        }
+        .map{
+            margin-left: 900px;
+            margin-top: -600px;
+        }
+@media (max-width: 768px) {
+    table {
+            margin-top: 100px;
+            width: 500px;
+            background-color: #006b1b;
+            border: 1px solid blue;
+        }
+        td,th{
+            border: 1px solid blue;
+        }
+        .details {
+            margin-top: 50px;
+            height: 500px;
+            width: 100%;
+            margin-left: -0px;
+            background-color: dimgray;
+            text-align: center;
+            border-radius: 20px;
+            line-height: 10px;
+        }
+        .pay{
+            margin-left: 90%;
+            margin-top: 100px;
+
+        }
+        .map{
+            margin-left: -100px;
+            margin-top: 0px;
+        }
+
+
+}
+
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+
+  <meta charset="UTF-8">
+  <title>Receipt Details</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/style.css' %}">
+         <link rel="icon" href="{% static 'Images/bus.jpg' %}" type="image/png">
+
+</head>
+
+<body style="background-color: #79aec8">
+<nav class="navbar bg-body-tertiary fixed-top" style="height: 100px;">
+<div class="container-fluid">
+  <a class="navbar-brand" href="#">Safirilink Travellers</a>
+    <form id="searchForm" class="d-flex mt-3" role="search" style="margin-left: 800px">
+  <input id="searchInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+  <button class="btn btn-outline-success" type="button" onclick="performSearch()">Search</button>
+</form>
+    <a href="{% url 'notifications' %}" ><img src="{% static 'Images/notification2.png' %}" alt="Notifications" height="30p" width="30px"></a>
+
+  <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasNavbarLabel">SAFIRILINK</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        <span id="close-menu-btn" class="material-symbols-outlined">close</span>
+        <li><a class="nav-link active" aria-current="page" href="{{ '/' }}">Home</a></li>
+        <li><a href="https://www.google.com/maps/place/DEDAN+KIMATHI+UNIVERSITY/@-0.3950126,36.9551816,15.28z/data=!4m10!1m2!2m1!1sdkut!3m6!1s0x1828677a4955ff13:0x7ae4dae9615396a6!8m2!3d-0.3978314!4d36.9609217!15sCgRka3V0WgYiBGRrdXSSAQp1bml2ZXJzaXR5mgEkQ2hkRFNVaE5NRzluUzBWSlEwRm5TVVJDZG1adVREZEJSUkFC4AEA!16s%2Fm%2F04q3glb?entry=ttu" target="_blank">Location</a></li>
+
+        {% if user.is_authenticated %}
+            <li><a class="nav-link" href="{% url 'notifications' %}">Notifications</a></li>
+        {% else %}
+            <li><a class="nav-link" href="{% url 'login' %}">Notification</a></li>
+        {% endif %}
+        <li><a class="nav-link" href="{% url 'contact' %}">Contact us</a></li>
+        <li><a class="nav-link" href="{% url 'dashboard' %}">Vehicles available</a></li>
+        {% if user.is_authenticated %}
+            <li><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+            <li><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+      </ul>
+      <span id="hamburger-btn" class="material-symbols-outlined" style="color: black;">menu</span>
+
+    </div>
+  </div>
+</div>
+</nav>
+{% if user.is_authenticated and user_vehicle %}
+<table border="1" class="table table-striped-columns" style="margin-top: 150px;">
+  <h1>{{ response_data }}</h1>
+  <tr>
+             <th>Bus Number Plate</th>
+              <th>Arrival Time</th>
+              <th>Arrival Date</th>
+              <th>From</th>
+              <th>Destination</th>
+              <th>Time Until Departure</th>
+              <th>Amount</th>
+              <th>Number Of Seats</th>
+
+  </tr>
+  {% for bus in buses %}
+      <tr>
+          <td id="busName_{{ bus.id }}">{{ bus.BusName }}</td>
+           <td>{{ bus.BusDepartureDate }}</td>
+            <td>{{ bus.BusArrivalDate }}</td>
+            <td>{{ bus.From }}</td>
+             <td>{{ bus.BusDestination }}</td>
+          <td style="color: blue">
+         {% if bus.is_booking_enabled %}
+          {{ bus.time_until_departure }}
+         {% else %}
+             <p style="color: red">Time is up! Book Another Bus.</p>
+         {% endif %}
+          </td>
+          <td>{{ bus.Amount }}</td>
+          <td>{{ bus.NuberOfSeats }}</td>
+
+          <td>
+                {% if bus.is_booking_enabled and user.is_authenticated %}
+                    <a href="{% url 'edit_booking' bus.id %}" class="btn btn-primary btn-sm">Edit</a>
+                    <form action="{% url 'delete_booking' bus.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                {% else %}
+                    <span class="text-muted">Actions not available</span>
+                {% endif %}
+          </td>
+
+
+      </tr>
+  {% endfor %}
+</table>
+  {% endif %}
+{% if user.is_authenticated and not user_vehicle %}
+      <p style="margin-top: 100px">No booked vehicle found. <a href="{% url 'dashboard' %}">Book a vehicle now!</a></p>
+  {% endif %}
+
+<a class="btn btn-success" href="{% url 'book' %}">Pay here</a>
+<a class="btn btn-success" href="{% url 'dashboard' %}">vehicles</a>
+
+<hr>
+{% for message in messages %}
+  <p>{{ message }}</p>
+{% endfor %}
+<h2>SAFE JOURNEY</h2>
+<div class="details" id="receiptContent" style="margin-left: 10%">
+    <h1><u>Details</u></h1>
+
+  {% if user.is_authenticated %}
+      <p><strong>Username:</strong> {{ user.username }}</p><br><br>
+      <p><strong>First Name:</strong> {{ user.fname }}</p><br><br>
+      <p><strong>Last Name:</strong> {{ user.lname }}</p><br><br>
+      <p><strong>Email:</strong> {{ user.email }}</p><br><br>
+      <p><strong>Vehicle Number Plate:</strong> {{ user.vehicle }}</p><br><br>
+      <p><strong>Seats Quantity:</strong><span>{{ user.quantity }}</span></p><br>
+      <p><strong>Amount paid:</strong> {{ user.amount_paid }}</p><br><br>
+      <p><strong>Payment Confirmation:</strong> {{ user.is_paid }}</p><br><br>
+      <p><strong>Seat Number:</strong> {{ user.seatNumber }}</p><br><br>
+      <p><strong>Time:</strong> <span id="currentDateTime"></span></p><br><br>
+      <button onclick="downloadReceipt()" class="btn btn-danger btn-sm">Download Receipt </button>
+
+  {% else %}
+      <p>Please <a href="{% url 'login' %}">login</a> to view details.</p>
+  {% endif %}
+</div>
+<br><br>
+<div class="map" style="text-align: center">
+    {% for bus in buses %}
+        <div style="text-align: center "> {{ bus.BusName }}</div><br>
+        {% if user.is_authenticated and bus.From == "nyeri" and bus.BusDestination == "nakuru" %}
+           <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d510693.72541921475!2d36.1850975281372!3d-0.19702888878939484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x18285dfed09e0ebf%3A0x829716f702f65e9e!2sNyeri!3m2!1d-0.43709899999999996!2d36.9580104!4m5!1s0x18298d90cf610bef%3A0xf2f21833bc7cc21a!2sNakuru!3m2!1d-0.3030988!2d36.080026!5e0!3m2!1sen!2ske!4v1707755251002!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        {% endif %}
+        {% if user.is_authenticated and bus.From == "nairobi" and bus.BusDestination == "nyeri" %}
+            <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d510638.93081310013!2d36.71615398620053!3d-0.8621392319641961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi!3m2!1d-1.2920658999999999!2d36.8219462!4m5!1s0x18285dfed09e0ebf%3A0x829716f702f65e9e!2sNyeri!3m2!1d-0.43709899999999996!2d36.9580104!5e0!3m2!1sen!2ske!4v1707755293153!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+        {% endif %}
+        {% if user.is_authenticated and bus.From == "nakuru" and bus.BusDestination == "nairobi"  %}
+            <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d510648.53636852757!2d36.11850508478701!3d-0.7872667707445211!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x18298d90cf610bef%3A0xf2f21833bc7cc21a!2sNakuru!3m2!1d-0.3030988!2d36.080026!4m5!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi!3m2!1d-1.2920658999999999!2d36.8219462!5e0!3m2!1sen!2ske!4v1707811222816!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        {% endif %}
+        {% if user.is_authenticated and bus.From == "nakuru" and bus.BusDestination == "kisumu"  %}
+           <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d2042756.429091659!2d34.099213966486275!3d-0.313356570935029!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x18298d90cf610bef%3A0xf2f21833bc7cc21a!2sNakuru!3m2!1d-0.3030988!2d36.080026!4m5!1s0x182aa437ad4ac81d%3A0x2012a439d6248dd2!2sKisumu!3m2!1d-0.0917016!2d34.7679568!5e0!3m2!1sen!2ske!4v1709736665274!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>        {% endif %}
+        {% if user.is_authenticated and bus.From == "nakuru" and bus.BusDestination == "nyeri"  %}
+             <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1021387.4514384805!2d35.85824221980898!3d-0.19701910015506316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x18298d90cf610bef%3A0xf2f21833bc7cc21a!2sNakuru!3m2!1d-0.3030988!2d36.080026!4m5!1s0x18285dfed09e0ebf%3A0x829716f702f65e9e!2sNyeri!3m2!1d-0.43709899999999996!2d36.9580104!5e0!3m2!1sen!2ske!4v1709231860628!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        {% endif %}
+        {% if user.is_authenticated and bus.From == "nyeri" and bus.BusDestination == "nairobi"  %}
+             <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d510638.96140695806!2d36.71635711135776!3d-0.8619110859616239!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x18285dfed09e0ebf%3A0x829716f702f65e9e!2sNyeri!3m2!1d-0.43709899999999996!2d36.9580104!4m5!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi!3m2!1d-1.2920658999999999!2d36.8219462!5e0!3m2!1sen!2ske!4v1709231921777!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        {% endif %}
+        {% if user.is_authenticated and bus.From == "kisumu" and bus.BusDestination == "nairobi"  %}
+              <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d2042639.6907313445!2d34.47548824323001!3d-0.6880409315325909!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x182aa437ad4ac81d%3A0x2012a439d6248dd2!2sKisumu!3m2!1d-0.0917016!2d34.7679568!4m5!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi!3m2!1d-1.2920658999999999!2d36.8219462!5e0!3m2!1sen!2ske!4v1709233515726!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        {% endif %}
+        {% if user.is_authenticated and bus.From == "kisumu" and bus.BusDestination == "nakuru"  %}
+               <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d2042775.341450718!2d34.10452803100533!3d-0.19340870345609348!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x182aa437ad4ac81d%3A0x2012a439d6248dd2!2sKisumu!3m2!1d-0.0917016!2d34.7679568!4m5!1s0x18298d90cf610bef%3A0xf2f21833bc7cc21a!2sNakuru!3m2!1d-0.3030988!2d36.080026!5e0!3m2!1sen!2ske!4v1709233547455!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        {% endif %}
+        {% if user.is_authenticated and bus.From == "nairobi" and bus.BusDestination == "kisumu"  %}
+                 <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d2042637.9345305953!2d34.473251844682906!3d-0.6921307471243251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi!3m2!1d-1.2920658999999999!2d36.8219462!4m5!1s0x182aa437ad4ac81d%3A0x2012a439d6248dd2!2sKisumu!3m2!1d-0.0917016!2d34.7679568!5e0!3m2!1sen!2ske!4v1709233593215!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        {% endif %}
+        {% if user.is_authenticated and bus.From == "nairobi" and bus.BusDestination == "nakuru"  %}
+                 <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1021297.0349934571!2d35.78952729939739!3d-0.7874208502027521!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi!3m2!1d-1.2920658999999999!2d36.8219462!4m5!1s0x18298d90cf610bef%3A0xf2f21833bc7cc21a!2sNakuru!3m2!1d-0.3030988!2d36.080026!5e0!3m2!1sen!2ske!4v1709233638859!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        {% endif %}
+        {% if user.is_authenticated and bus.From == "nairobi" and bus.BusDestination == "mombasa"  %}
+                 <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d4081562.952273978!2d35.602835338295186!3d-2.539062432968973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi!3m2!1d-1.2920658999999999!2d36.8219462!4m5!1s0x184012e78ec02c7d%3A0xcb618bbc35d0db5a!2sMombasa!3m2!1d-4.0434771!2d39.6682065!5e0!3m2!1sen!2ske!4v1709233709450!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        {% endif %}
+        {% if user.is_authenticated and bus.From == "nakuru" and bus.BusDestination == "Eldoret"  %}
+                 <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1021391.755802965!2d35.01527651840037!3d0.10558235656064181!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x18298d90cf610bef%3A0xf2f21833bc7cc21a!2sNakuru!3m2!1d-0.3030988!2d36.080026!4m5!1s0x178101ae37f9f535%3A0xe2db337df0fc0820!2sEldoret!3m2!1d0.5142774999999999!2d35.2697802!5e0!3m2!1sen!2ske!4v1709233759419!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        {% endif %}
+
+    {% endfor %}
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+
+<script>
+    // Get the current date and time
+    var now = new Date();
+    var currentDateTime = now.toLocaleString();
+
+    // Display the current date and time
+    document.getElementById("currentDateTime").innerText = currentDateTime;
+
+    function downloadReceipt() {
+      const receiptContainer = document.getElementById("receiptContent");
+
+      // Log fetched content for debugging (uncomment if needed)
+      // console.log("Fetched content:", receiptContainer.innerHTML);
+
+      html2pdf(receiptContainer, {
+        margin: 10,
+        filename: 'receipt.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      })
+      .then(response => {
+        console.log("PDF generation successful!");
+      })
+      .catch(error => {
+        console.error("Error generating PDF:", error);
+        // Handle errors appropriately (e.g., display error message)
+      });
+    }
+  </script>
+<script src="{% static 'javascript.js' %}"></script>
+<script>
+    const header = document.querySelector("header");
+    const hamburgerBtn = document.querySelector("#hamburger-btn");
+    const closeMenuBtn = document.querySelector("#close-menu-btn");
+
+    // Toggle mobile menu on hamburger button click
+    hamburgerBtn.addEventListener("click", () => header.classList.toggle("show-mobile-menu"));
+
+    // Close mobile menu on close button click
+    closeMenuBtn.addEventListener("click", () => hamburgerBtn.click());
+</script>
+
+</body>
+</html>

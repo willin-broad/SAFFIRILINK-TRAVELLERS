@@ -95,10 +95,10 @@ class MpesaTransaction(models.Model):
     MerchantRequestID = models.CharField(max_length=50)
     CheckoutRequestID = models.CharField(max_length=50)
     ResultCode = models.CharField(max_length=10)
-    calculated_amount = models.IntegerField()
+    calculated_amount = models.DecimalField(decimal_places=2, max_digits=10)
     MpesaReceiptNumber = models.CharField(max_length=50)
     PhoneNumber = models.CharField(max_length=15)
 
 
     def __str__(self):
-        return f"{self.MpesaReceiptNumber} - {self.Amount}"
+        return f"{self.MpesaReceiptNumber} - {self.calculated_amount}"

@@ -6,7 +6,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 
-def mpesa_payment(amount, phone_number):
+def mpesa_payment(phone_number, calculated_amount):
     # Safaricom Developer Portal Credentials
     consumer_key = '9f3n39QeeRxMQn7QwXnV3Ic57wFCuJAA9qJ99iBoJ3QVQvZE'
     consumer_secret = '3bz3dsBibxRHkdyIWL2PInqj6mQx9C2l7ps0gh9HYDXaRnpHP3l7m0BM74mA0syt'
@@ -41,7 +41,7 @@ def mpesa_payment(amount, phone_number):
         "Password": lipa_na_mpesa_online_password,
         "Timestamp": timestamp,
         "TransactionType": "CustomerPayBillOnline",
-        "Amount": amount,
+        "Amount": calculated_amount,
         "PartyA": international_phone_number,
         "PartyB": shortcode,
         "PhoneNumber": international_phone_number,

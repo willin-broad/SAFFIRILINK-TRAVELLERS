@@ -106,7 +106,7 @@
                 <td>{{ bus.BusArrivalDate }}</td>
                 <td>{{ bus.From }}</td>
                 <td>{{ bus.BusDestination }}</td>
-                <td>Ksh {{ bus.Amount }}</td>
+                <td>Ksh {{ bus.calculated_amount }}</td>
                 <td>
                     {% if bus.is_booking_enabled %}
                         <span class="text-success">{{ bus.time_until_departure }}</span>

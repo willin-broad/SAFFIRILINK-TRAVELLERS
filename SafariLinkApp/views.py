@@ -109,7 +109,7 @@ def daraja_view(request):
         # Retrieve form data
         username = request.POST.get('username')
         vehicle = request.POST.get('vehicle')
-        amount = request.POST.get('amount_paid')
+        calculated_amount = request.POST.get('calculated_amount')
         quantity = request.POST.get('quantity')
         phone_number = request.POST.get('phoneNo')
 
@@ -119,13 +119,13 @@ def daraja_view(request):
             return HttpResponseRedirect(reverse('home'))
 
 
-        response = mpesa_payment(amount, phone_number)
+        response = mpesa_payment(phone_number, calculated_amount)
 
         if response.get('ResponseCode') == '0':
             # Update user's amount_paid field
             user = Member.objects.get(username=username)
             user.vehicle = vehicle
-            user.amount_paid = amount
+            user.calculated_amount = calculated_amount
             user.quantity = quantity
             user.save()
 

@@ -1,23 +1,36 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Booking</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Bus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Edit Your Booking</h1>
-    <div class="card shadow p-4">
-        <form method="post">
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Book a Bus</h2>
+        <form method="post" id="bookingForm">
             {% csrf_token %}
             {{ form.as_p }}
-            <div class="d-flex justify-content-between">
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-                <a href="{% url 'receipt' %}" class="btn btn-secondary">Cancel</a>
-            </div>
+            <button type="submit" class="btn btn-primary w-100">Book Now</button>
         </form>
     </div>
-</div>
+
+    <!-- Include JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript to auto-fill BusDestination based on BusName selection
+        document.getElementById("id_BusName").addEventListener("change", function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const destinationField = document.getElementById("id_BusDestination");
+
+            // Get the selected bus's destination from the dataset
+            const destination = selectedOption.dataset.destination || "";
+
+            // Auto-fill the BusDestination field
+            destinationField.value = destination;
+        });
+    </script>
 </body>
 </html>
